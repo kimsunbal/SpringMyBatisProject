@@ -20,4 +20,6 @@ public class UserBoard {
 	private int readCount;
 	private String username;
 	private String email;
+	private String searchContent;
+	private String previewImg;
 }

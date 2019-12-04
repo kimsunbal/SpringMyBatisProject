@@ -18,4 +18,6 @@ public class Board {
 	private String userId;;
 	private Timestamp createDate;
 	private int readCount;
+	private String searchContent;
+	private String previewImg;
 }
