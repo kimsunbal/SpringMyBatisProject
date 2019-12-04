@@ -3,11 +3,11 @@
 <head>
 <title>Andrea - Free Bootstrap 4 Template by Colorlib</title>
 
-<%@ include file="../../include/head.jsp"%>
+<%@ include file="/include/head.jsp"%>
 </head>
 <body>
 	<div id="colorlib-page">
-		<%@ include file="../../include/nav.jsp"%>
+		<%@ include file="/include/nav.jsp"%>
 		<div id="colorlib-main">
 			<section class="ftco-about img ftco-section ftco-no-pt ftco-no-pb"
 				id="about-section">
@@ -37,16 +37,6 @@
 		<!-- END COLORLIB-MAIN -->
 	</div>
 	<!-- END COLORLIB-PAGE -->
-
-	<!-- loader -->
-	<div id="ftco-loader" class="show fullscreen">
-		<svg class="circular" width="48px" height="48px">
-			<circle class="path-bg" cx="24" cy="24" r="22" fill="none"
-				stroke-width="4" stroke="#eeeeee" />
-			<circle class="path" cx="24" cy="24" r="22" fill="none"
-				stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg>
-	</div>
-
 
 	<%@ include file="../../include/footer.jsp"%>
 

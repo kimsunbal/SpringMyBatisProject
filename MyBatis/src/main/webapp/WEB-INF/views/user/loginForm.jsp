@@ -3,34 +3,28 @@
 
 <head>
 	<title>Andrea - Free Bootstrap 4 Template by Colorlib</title>
-<%@ include file="../../../include/head.jsp"%>
+<%@ include file="/include/head.jsp"%>
 </head>
 
 <body>
 
 	<div id="colorlib-page">
-		<%@ include file="../../../include/nav.jsp"%>
+		<%@ include file="/include/nav.jsp"%>
 		<div id="colorlib-main">
 			<section class="ftco-section contact-section px-md-4">
 				<div class="container">
 					<div class="row block-9">
 						<div class="col-lg-12 d-flex">
-							<form action="#" class="bg-light p-5 contact-form">
+							<form action="/user/login" method="post" class="bg-light p-5 contact-form">
+								<h1>Login Form</h1>
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Your Name">
+									<input type="text" class="form-control" name="username" placeholder="Username">
 								</div>
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Your Email">
+									<input type="text" class="form-control" name="password" placeholder="Password">
 								</div>
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Subject">
-								</div>
-								<div class="form-group">
-									<textarea name="" id="" cols="30" rows="7" class="form-control"
-										placeholder="Message"></textarea>
-								</div>
-								<div class="form-group">
-									<input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
+								<div class="form-group text-right">
+									<input type="submit" value="Login" class="btn btn-primary py-3 px-5">
 								</div>
 							</form>
 
@@ -41,14 +35,7 @@
 		</div><!-- END COLORLIB-MAIN -->
 	</div><!-- END COLORLIB-PAGE -->
 
-	<!-- loader -->
-	<div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px">
-			<circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" />
-			<circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
-				stroke="#F96D00" /></svg></div>
-
-
-	<%@ include file="../../../include/footer.jsp"%>
+	<%@ include file="/include/footer.jsp"%>
 </body>
 
 </html>
