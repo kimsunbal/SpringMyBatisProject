@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- repository 패키지 경로.내xml파일명Repository 로생성 -->
+<mapper namespace="com.cos.crud.repository.BoardRepository">
+	<select id="findById" resultType="com.cos.crud.model.Board">
+		select * from Board where id =
+		#{id}
+	</select>
+	<select id="findAll" resultType="com.cos.crud.model.Board">
+		select * from Board
+	</select>
+	<insert id="post">
+		INSERT INTO board(title, content, userId, createDate)
+		values(#{title},#{content},#{userId},now())
+	</insert>
+</mapper>

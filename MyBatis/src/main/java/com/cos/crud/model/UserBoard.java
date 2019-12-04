@@ -17,6 +17,7 @@ public class UserBoard {
 	private String content;
 	private String userId;;
 	private Timestamp createDate;
+	private int readCount;
 	private String username;
 	private String email;
 }

@@ -20,14 +20,14 @@
 
 	<div class="colorlib-footer">
 		<h1 id="colorlib-logo" class="mb-5">
-			<a href="index.html" style="background-image: url(/images/bg_1.jpg);"><c:choose>
+			<c:choose>
 					<c:when test="${empty sessionScope.user}">
-					Hello
+					<a href="/user/joinForm" style="background-image: url(/images/bg_1.jpg);">Hello</a>
 					</c:when>
 					<c:otherwise>
-					${sessionScope.user.username}
+					<a href="/user/updateForm/${sessionScope.user.id}" style="background-image: url(/images/bg_1.jpg);">${sessionScope.user.username}</a>
 					</c:otherwise>
-				</c:choose> </a>
+				</c:choose> 
 		</h1>
 		<p class="pfooter">
 			<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
@@ -35,7 +35,9 @@
 			<script>
 				document.write(new Date().getFullYear());
 			</script>
-			All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+			All rights reserved | This template is made with <i
+				class="icon-heart" aria-hidden="true"></i> by <a
+				href="https://colorlib.com" target="_blank">Colorlib</a>
 			<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 		</p>
 	</div>

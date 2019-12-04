@@ -21,7 +21,7 @@
 									<input type="text" class="form-control" name="username" placeholder="Username">
 								</div>
 								<div class="form-group">
-									<input type="text" class="form-control" name="password" placeholder="Password">
+									<input type="password" class="form-control" name="password" placeholder="Password">
 								</div>
 								<div class="form-group text-right">
 									<input type="submit" value="Login" class="btn btn-primary py-3 px-5">

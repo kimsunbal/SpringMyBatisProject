@@ -17,20 +17,31 @@
 					<div class="row d-flex">
 						<div class="col-lg-8 px-md-5 py-5">
 							<div class="row pt-md-4">
-								<div class="col-md-12 bg-light">
-									<h1>${board.title}</h1>
-									<div>
-										<button class="col-md-2 btn btn-dark submit">수정</button>
-										<button class="col-md-2 btn btn-dark submit">삭제</button>
-										<br>
+								<div class="col-md-12 bg-light" style="padding: 20px;">
+									<h2>${board.title}</h2>
+									<div style="float: right;">
+										<div style="margin-top: 20px; margin-bottom: 20px">
+											<input type="button" value="Update"
+												onclick="location.href = '/board/updateForm/${board.id}'" class="btn btn-dark submit">
+											<input type="button" value="Delete" onclick="location.href = '/board/delete/${board.id}'"
+												class="btn btn-dark submit">
+										</div>
+									</div>
+									<div style="display: inline-block;">
+										<div>
+											<a href="#"><span class="icon-person" style="margin-right: 10px"></span>${board.username}</a>
+										</div>
+										<div>
+											<a href="#"><span class="icon-chat" style="margin-right: 10px"></span>${board.email}</a>
+										</div>
+										<div>
+											<a href="#"><span class="icon-calendar" style="margin-right: 10px"></span>${board.createDate}</a>
+										</div>
 									</div>
 								</div>
-								<div>${board.content}</div>
-								<div class="col-md-12 bg-light">
-									<div class="desc">
-										<h3>George Washington</h3>
-									</div>
-								</div>
+
+								<div class="col-md-12">${board.content}</div>
+
 							</div>
 							<!-- END-->
 						</div>

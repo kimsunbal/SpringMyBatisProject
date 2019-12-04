@@ -5,15 +5,25 @@
 <!-- repository 패키지 경로.내xml파일명Repository 로생성 -->
 <mapper namespace="com.cos.crud.repository.UserRepository">
 	<select id="findById" resultType="com.cos.crud.model.User">
-		select * from User where id = #{id}
+		SELECT * FROM User WHERE id =
+		#{id}
 	</select>
 	<select id="findAll" resultType="com.cos.crud.model.User">
-		select * from User
+		SELECT * FROM User
 	</select>
 	<insert id="join">
-		insert into user(username,password,email) value	(#{username},#{password},#{email});
+		INSERT INTO user(username,password,email) VALUE
+		(#{username},#{password},#{email});
 	</insert>
 	<select id="login" resultType="com.cos.crud.model.User">
-		SELECT * FROM user WHERE username = #{username} AND password = #{password}
+		SELECT * FROM user WHERE username
+		= #{username} AND password = #{password}
 	</select>
+	<delete id="delete">
+		DELETE FROM user WHERE id=
+		#{id}
+	</delete>
+	<update id="update">
+		UPDATE user SET password = #{password}, email = #{email} WHERE id=#{id}
+	</update>
 </mapper>

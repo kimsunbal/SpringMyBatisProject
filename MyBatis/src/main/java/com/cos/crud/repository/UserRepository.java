@@ -9,4 +9,6 @@ public interface UserRepository {
 	List<User> findAll();
 	void join(User user);
 	User login(String username, String password);
+	void update(User user);
+	void delete(int id);
 }

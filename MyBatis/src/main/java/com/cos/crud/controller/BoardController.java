@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cos.crud.model.Board;
+import com.cos.crud.model.UserBoard;
 import com.cos.crud.repository.BoardRepository;
 
 @Controller
@@ -22,16 +23,33 @@ public class BoardController {
 	private BoardRepository boardRepo; 
 	
 	@GetMapping("/list")
-	public String list(Model model) {
-		List<Board> boards = boardRepo.findAll();
-		model.addAttribute("boards", boards);
-		return "/board/list";
+	public String list() {
+		return "redirect:/board/list/1";
 	}
 	
 	@GetMapping("/findall")
 	public @ResponseBody List<Board> findAll() {
 		List<Board> boards = boardRepo.findAll();
 		return boards;
+	}
+	
+	@GetMapping("/list/{page}")
+	public String findByPage(@PathVariable int page, Model model) {
+		int findpage = (page - 1) * 3;
+		List<UserBoard> userBoards = boardRepo.findByPage(findpage);
+		int countPage = boardRepo.selectCount();
+		if (countPage%3==0) {
+			countPage = countPage/3;
+		}else {
+			countPage = countPage/3+1;
+		}
+
+		List<UserBoard> popularBoards = boardRepo.findOrderByReadCountDesc();
+		model.addAttribute("page",page);
+		model.addAttribute("countPage",countPage);
+		model.addAttribute("userBoards",userBoards);
+		model.addAttribute("popularBoards",popularBoards);
+		return "/board/list";
 	}
 
 	@GetMapping("/postForm")
@@ -45,10 +63,35 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	@GetMapping("/detail/{id}")
-	public String detail(@PathVariable int id, Model model) {
+	@GetMapping("/updateForm/{id}")
+	public String updateForm(@PathVariable int id, Model model) {
 		Board board = boardRepo.findById(id);
 		model.addAttribute(board);
+		return "/board/updateForm";
+	}
+	
+	@PostMapping("/update")
+	public String update(Board board) {
+		boardRepo.update(board);
+		System.out.println("[[[[[[board object]]]]]]"+board);
+		return "redirect:/board/detail/"+board.getId();
+	}
+	
+	@GetMapping("/detail/{id}")
+	public String detail(@PathVariable int id, Model model) {
+		UserBoard board = boardRepo.joinUserFindById(id);
+		boardRepo.increaseReadCount(id);
+		List<UserBoard> popularBoards = boardRepo.findOrderByReadCountDesc();
+		model.addAttribute("board",board);
+		model.addAttribute("popularBoards",popularBoards);
 		return "/board/detail";
 	}
+
+	@GetMapping("/delete/{id}")
+	public String delete(@PathVariable int id) {
+		boardRepo.delete(id);
+		return "redirect:/board/list";
+	}
+	
+	
 }

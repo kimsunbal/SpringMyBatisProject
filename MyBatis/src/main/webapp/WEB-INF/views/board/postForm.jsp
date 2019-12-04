@@ -18,7 +18,7 @@
 					<div class="row block-9">
 						<div class="col-lg-12 d-flex">
 							<form action="/board/post" method="POST" class="bg-light p-5 contact-form">
-								<input type="hidden" name="userId" value="1">
+								<input type="hidden" name="userId" value="${sessionScope.user.id}">
 
 								<h1>Post Form</h1>
 								<div class="form-group">
