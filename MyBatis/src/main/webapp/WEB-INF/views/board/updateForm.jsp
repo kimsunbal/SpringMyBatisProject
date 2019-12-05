@@ -22,9 +22,9 @@
 				<div class="container">
 					<div class="row block-9">
 						<div class="col-lg-12 d-flex">
-							<form action="/board/post" method="POST" class="bg-light p-5 contact-form">
-								<input type="hidden" name="userId" value="${sessionScope.user.id}">
-								<h1>Post Form</h1>
+							<form action="/board/update" method="POST" class="bg-light p-5 contact-form">
+								<input type="hidden" name="id" value="${board.id}">
+								<h1>Update Form</h1>
 								<div class="form-group">
 									<input type="text" class="form-control" name="title" value="${board.title}" placeholder="Title">
 								</div>
@@ -40,7 +40,7 @@
 
 								<br>
 								<div class="form-group text-right">
-									<input type="submit" value="Post" class="btn btn-primary py-3 px-5">
+									<input type="submit" value="Update" class="btn btn-primary py-3 px-5">
 								</div>
 
 							</form>

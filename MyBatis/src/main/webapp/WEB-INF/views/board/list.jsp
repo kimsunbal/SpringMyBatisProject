@@ -22,20 +22,19 @@
 								<c:forEach var="userboard" items="${userBoards}">
 									<div class="col-md-12">
 										<div class="blog-entry ftco-animate d-md-flex">
-											<a href="single.html" class="img img-2"
-												style="background-image: url(/images/image_1.jpg);"></a>
+											<a href="/board/detail/${userboard.id}" class="img img-2"
+												style="background-image: url(${userboard.previewImg});"></a>
 											<div class="text text-2 pl-md-4">
 												<h3 class="mb-2">
-													<a href="single.html">${userboard.title}</a>
+													<a href="/board/detail/${userboard.id}">${userboard.title}</a>
 												</h3>
 												<div class="meta-wrap">
 													<p class="meta">
 														<span><i class="icon-calendar mr-2"></i>${userboard.createDate}</span> <span><a
-															href="single.html"><i class="icon-folder-o mr-2"></i>${userboard.username}</a></span> <span><i
+															href="/board/detail/${userboard.id}"><i class="icon-folder-o mr-2"></i>${userboard.username}</a></span> <span><i
 															class="icon-comment2 mr-2"></i>${userboard.readCount}</span>
 													</p>
 												</div>
-												<p class="mb-4">${userboard.content}</p>
 												<p>
 													<a href="/board/detail/${userboard.id}" class="btn-custom">Read More <span
 														class="ion-ios-arrow-forward"></span>

@@ -13,20 +13,20 @@
 		<h3 class="sidebar-heading">Popular Articles</h3>
 		<c:forEach var="popularBoard" items="${popularBoards}">
 			<div class="block-21 mb-4 d-flex">
-				<a class="blog-img mr-4" style="background-image: url(/images/image_1.jpg);"></a>
+				<a class="blog-img mr-4" style="background-image: url(${popularBoard.previewImg});"></a>
 				<div class="text">
 					<h3 class="heading">
-						<a href="#">${popularBoard.title}</a>
+						<a href="/board/detail/${popularBoard.id}">${popularBoard.title}</a>
 					</h3>
 					<div class="meta">
 						<div>
-							<a href="#"><span class="icon-calendar"></span>${popularBoard.createDate}</a>
+							<a href="/board/detail/${popularBoard.id}"><span class="icon-calendar"></span>${popularBoard.createDate}</a>
 						</div>
 						<div>
-							<a href="#"><span class="icon-person"></span>${popularBoard.username}</a>
+							<a href="/board/detail/${popularBoard.id}"><span class="icon-person"></span>${popularBoard.username}</a>
 						</div>
 						<div>
-							<a href="#"><span class="icon-chat"></span>${popularBoard.readCount}</a>
+							<a href="/board/detail/${popularBoard.id}"><span class="icon-chat"></span>${popularBoard.readCount}</a>
 						</div>
 					</div>
 				</div>

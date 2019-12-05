@@ -36,11 +36,11 @@ public class Utils {
 						String previewImg = et.attr("src");// 이미지 소스 찾기
 						board.setPreviewImg(previewImg);
 					} else {
-						board.setPreviewImg("/blog/img/storm_unplash.jpg");
+						board.setPreviewImg("/images/image_3.jpg");
 					}
 				}
 			} else {
-				board.setPreviewImg("/blog/img/storm_unplash.jpg");
+				board.setPreviewImg("/images/image_3.jpg");
 			}
 		}
 	}

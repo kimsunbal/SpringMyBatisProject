@@ -20,6 +20,7 @@ public class UserBoard {
 	private int readCount;
 	private String username;
 	private String email;
+	//DB 관련없음
 	private String searchContent;
 	private String previewImg;
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.cos.crud.model.Board;
 import com.cos.crud.model.UserBoard;
 import com.cos.crud.repository.BoardRepository;
+import com.cos.crud.utils.Utils;
 
 @Service
 public class BoardService {
@@ -29,6 +30,7 @@ public class BoardService {
 		try {
 			int findpage = (page - 1) * 3;
 			List<UserBoard> userBoards = boardRepo.findByPage(findpage);
+			Utils.setPreviewImg(userBoards);
 			return userBoards;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -54,6 +56,7 @@ public class BoardService {
 	public List<UserBoard> findOrderByReadCountDesc() {
 		try {
 			List<UserBoard> popularBoards = boardRepo.findOrderByReadCountDesc();
+			Utils.setPreviewImg(popularBoards);
 			return popularBoards;
 		} catch (Exception e) {
 			e.printStackTrace();

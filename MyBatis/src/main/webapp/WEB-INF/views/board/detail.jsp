@@ -21,10 +21,10 @@
 									<h2>${board.title}</h2>
 									<div style="float: right;">
 										<div style="margin-top: 20px; margin-bottom: 20px">
-											<input type="button" value="Update"
-												onclick="location.href = '/board/updateForm/${board.id}'" class="btn btn-dark submit">
-											<input type="button" value="Delete" onclick="location.href = '/board/delete/${board.id}'"
-												class="btn btn-dark submit">
+											<c:if test="${sessionScope.user.id eq board.userId}">
+												<input type="button" value="Update" onclick="location.href = '/board/updateForm/${board.id}'" class="btn btn-dark submit">
+												<input type="button" value="Delete" onclick="location.href = '/board/delete/${board.id}'" class="btn btn-dark submit">
+											</c:if>
 										</div>
 									</div>
 									<div style="display: inline-block;">
