@@ -12,8 +12,9 @@
 		SELECT * FROM User
 	</select>
 	<insert id="join">
-		INSERT INTO user(username,password,email) VALUE
-		(#{username},#{password},#{email});
+		INSERT INTO user(username,password,email,userProfile)
+		VALUE
+		(#{username},#{password},#{email},#{userProfile});
 	</insert>
 	<select id="login" resultType="com.cos.crud.model.User">
 		SELECT * FROM user WHERE username
@@ -24,6 +25,6 @@
 		#{id}
 	</delete>
 	<update id="update">
-		UPDATE user SET password = #{password}, email = #{email} WHERE id=#{id}
+		UPDATE user SET password = #{password}, email = #{email}, userProfile = #{userProfile} WHERE id=#{id}
 	</update>
 </mapper>

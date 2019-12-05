@@ -15,7 +15,7 @@
 				<div class="container">
 					<div class="row block-9">
 						<div class="col-lg-12 d-flex">
-							<form action="/user/update" method="POST" class="bg-light p-5 contact-form">
+							<form action="/user/update" method="POST" class="bg-light p-5 contact-form" enctype="multipart/form-data">
 								<input type="hidden" name="id" value="${user.id}">
 								<h1>User Profile</h1>
 								<div class="form-group">
@@ -29,6 +29,9 @@
 								</div>
 								<div class="form-group">
 									<input type="text" class="form-control" name="email" placeholder="Email" value="${user.email}">
+								</div>
+								<div class="form-group">
+									<input type="file" class="form-control" id="photo" name="photo">
 								</div>
 								<div class="form-group">
 									<input type="button" onclick="location.href='/user/delete/${user.id}'" value="Delete Account" class="btn btn-primary py-3 px-5" style="background-color: red">

@@ -15,7 +15,7 @@
 				<div class="container">
 					<div class="row block-9">
 						<div class="col-lg-12 d-flex">
-							<form action="/user/join" method="POST" class="bg-light p-5 contact-form">
+							<form action="/user/join" method="POST" class="bg-light p-5 contact-form" enctype="multipart/form-data">
 								<h1>Join Form</h1>
 								<div class="form-group">
 									<input type="text" class="form-control" name="username" placeholder="Username">
@@ -28,6 +28,9 @@
 								</div>
 								<div class="form-group">
 									<input type="text" class="form-control" name="email" placeholder="Email">
+								</div>
+								<div class="form-group">
+									<input type="file" class="form-control" id="photo" name="photo">
 								</div>
 								<div class="form-group text-right">
 									<input type="submit" value="Join" class="btn btn-primary py-3 px-5">

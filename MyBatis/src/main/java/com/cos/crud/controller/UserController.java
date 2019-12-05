@@ -1,17 +1,24 @@
 package com.cos.crud.controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cos.crud.model.User;
 import com.cos.crud.repository.UserRepository;
@@ -23,6 +30,9 @@ public class UserController {
 
 	@Autowired
 	private UserRepository userRepo;
+
+	@Value("${file.path}")
+	private String resourcePath;
 
 	@GetMapping("/{id}")
 	public @ResponseBody User getUser(@PathVariable int id) {
@@ -42,7 +52,22 @@ public class UserController {
 	}
 
 	@PostMapping("/join")
-	public String join(User user) {
+	public String join(User user, @RequestParam("photo") MultipartFile file) {
+		String fname = file.getOriginalFilename();
+		try {
+			if (fname.equals("")) {
+				user.setUserProfile("/userProfile/default.jpg");
+			} else {
+				UUID uuid = UUID.randomUUID();
+				String uuidFileName = uuid + "_" + file.getOriginalFilename();
+				Path filePath = Paths.get(resourcePath + uuidFileName);
+				System.out.println("filePath:" + filePath);
+				Files.write(filePath, file.getBytes());
+				user.setUserProfile("/userProfile/" + uuidFileName);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		userRepo.join(user);
 		return "/user/loginForm";
 	}
@@ -67,14 +92,28 @@ public class UserController {
 	public String updateForm(@PathVariable int id, Model model) {
 		User user = userRepo.findById(id);
 		model.addAttribute("user", user);
-		System.out.println("-----------------" + user);
 		return "/user/updateForm";
 	}
 
 	@PostMapping("/update")
-	public String update(User user) {
-		System.out.println("[[[[[user]]]]]" + user);
+	public String update(User user, @RequestParam("photo") MultipartFile file, HttpSession session) {
+		String fname = file.getOriginalFilename();
+		try {
+			if (fname.equals("")) {
+				user.setUserProfile(user.getUserProfile());
+			} else {
+				UUID uuid = UUID.randomUUID();
+				String uuidFileName = uuid + "_" + file.getOriginalFilename();
+				Path filePath = Paths.get(resourcePath + uuidFileName);
+				System.out.println("filePath:" + filePath);
+				Files.write(filePath, file.getBytes());
+				user.setUserProfile("/userProfile/" + uuidFileName);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		userRepo.update(user);
+		session.setAttribute("user", user);
 		return "redirect:/";
 	}
 

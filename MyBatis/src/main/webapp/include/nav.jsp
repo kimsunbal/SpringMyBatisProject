@@ -19,25 +19,28 @@
 	</nav>
 
 	<div class="colorlib-footer">
-		<h1 id="colorlib-logo" class="mb-5">
-			<c:choose>
-					<c:when test="${empty sessionScope.user}">
-					<a href="/user/joinForm" style="background-image: url(/images/bg_1.jpg);">Hello</a>
-					</c:when>
-					<c:otherwise>
+		<c:choose>
+			<c:when test="${empty sessionScope.user}">
+				<h1 id="colorlib-logo" class="mb-5">
+					<a href="/user/loginForm" style="background-image: url(/images/bg_1.jpg);">Hello</a>
+				</h1>
+			</c:when>
+			<c:otherwise>
+				<h1 id="colorlib-logo" class="mb-5">
 					<a href="/user/updateForm/${sessionScope.user.id}" style="background-image: url(/images/bg_1.jpg);">${sessionScope.user.username}</a>
-					</c:otherwise>
-				</c:choose> 
-		</h1>
+				</h1>
+				<div>
+					<img class="blog-img mr-4" src="${sessionScope.user.userProfile}" style="width: 100px; height: 100px; border: solid gray">
+				</div>
+			</c:otherwise>
+		</c:choose>
 		<p class="pfooter">
 			<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 			Copyright &copy;
 			<script>
 				document.write(new Date().getFullYear());
 			</script>
-			All rights reserved | This template is made with <i
-				class="icon-heart" aria-hidden="true"></i> by <a
-				href="https://colorlib.com" target="_blank">Colorlib</a>
+			All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
 			<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 		</p>
 	</div>
