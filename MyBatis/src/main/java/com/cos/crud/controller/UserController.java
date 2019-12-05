@@ -1,11 +1,5 @@
 package com.cos.crud.controller;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.UUID;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cos.crud.model.User;
-import com.cos.crud.repository.UserRepository;
+import com.cos.crud.service.UserService;
 import com.cos.crud.utils.Script;
 
 @Controller
@@ -29,22 +23,10 @@ import com.cos.crud.utils.Script;
 public class UserController {
 
 	@Autowired
-	private UserRepository userRepo;
+	private UserService uService;
 
 	@Value("${file.path}")
 	private String resourcePath;
-
-	@GetMapping("/{id}")
-	public @ResponseBody User getUser(@PathVariable int id) {
-		User user = userRepo.findById(id);
-		return user;
-	}
-
-	@GetMapping("/findAll")
-	public @ResponseBody List<User> findAll() {
-		List<User> users = userRepo.findAll();
-		return users;
-	}
 
 	@GetMapping("/joinForm")
 	public String joinForm() {
@@ -52,24 +34,12 @@ public class UserController {
 	}
 
 	@PostMapping("/join")
-	public String join(User user, @RequestParam("photo") MultipartFile file) {
-		String fname = file.getOriginalFilename();
-		try {
-			if (fname.equals("")) {
-				user.setUserProfile("/userProfile/default.jpg");
-			} else {
-				UUID uuid = UUID.randomUUID();
-				String uuidFileName = uuid + "_" + file.getOriginalFilename();
-				Path filePath = Paths.get(resourcePath + uuidFileName);
-				System.out.println("filePath:" + filePath);
-				Files.write(filePath, file.getBytes());
-				user.setUserProfile("/userProfile/" + uuidFileName);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	public @ResponseBody String join(User user, @RequestParam("photo") MultipartFile file) {
+		int result = uService.join(user, file);
+		if (result == 1) {
+			return Script.href("/user/loginForm");
 		}
-		userRepo.join(user);
-		return "/user/loginForm";
+		return Script.back("Fail Join");
 	}
 
 	@GetMapping("/loginForm")
@@ -79,7 +49,7 @@ public class UserController {
 
 	@PostMapping("/login")
 	public @ResponseBody String login(User user, HttpSession session) {
-		User u = userRepo.login(user.getUsername(), user.getPassword());
+		User u = uService.login(user);
 		if (u != null) {
 			session.setAttribute("user", u);
 			return Script.href("/");
@@ -90,38 +60,33 @@ public class UserController {
 
 	@GetMapping("/updateForm/{id}")
 	public String updateForm(@PathVariable int id, Model model) {
-		User user = userRepo.findById(id);
-		model.addAttribute("user", user);
-		return "/user/updateForm";
+		User user = uService.updateForm(id);
+		if (user != null) {
+			model.addAttribute("user", user);
+			return "/user/updateForm";
+		}
+		return "redirect:/";
 	}
 
 	@PostMapping("/update")
-	public String update(User user, @RequestParam("photo") MultipartFile file, HttpSession session) {
-		String fname = file.getOriginalFilename();
-		try {
-			if (fname.equals("")) {
-				user.setUserProfile(user.getUserProfile());
-			} else {
-				UUID uuid = UUID.randomUUID();
-				String uuidFileName = uuid + "_" + file.getOriginalFilename();
-				Path filePath = Paths.get(resourcePath + uuidFileName);
-				System.out.println("filePath:" + filePath);
-				Files.write(filePath, file.getBytes());
-				user.setUserProfile("/userProfile/" + uuidFileName);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	public @ResponseBody String update(User user, @RequestParam("photo") MultipartFile file, HttpSession session) {
+		int result = uService.update(user, file);
+		if (result == 1) {
+			session.setAttribute("user", user);
+			return Script.href("/");
 		}
-		userRepo.update(user);
-		session.setAttribute("user", user);
-		return "redirect:/";
+		return Script.back("Fail Update");
+
 	}
 
 	@GetMapping("/delete/{id}")
-	public String delete(@PathVariable int id, HttpSession session) {
-		userRepo.delete(id);
-		session.invalidate();
-		return "redirect:/";
+	public @ResponseBody String delete(@PathVariable int id, HttpSession session) {
+		int result = uService.delete(id);
+		if (result == 1) {
+			session.invalidate();
+			return Script.href("/");
+		}
+		return Script.back("Fail Logout");
 	}
 
 	@GetMapping("/logout")

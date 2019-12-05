@@ -7,7 +7,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.cos.crud.model.Board;
 import com.cos.crud.model.UserBoard;
 
 public class Utils {

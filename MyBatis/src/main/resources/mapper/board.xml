@@ -14,9 +14,7 @@
 	</select>
 	<select id="findByPage"
 		resultType="com.cos.crud.model.UserBoard">
-		SELECT * FROM Board b, user u WHERE b.userId = u.id ORDER
-		BY b.id DESC limit
-		#{page}, 3
+		SELECT * FROM Board b, user u WHERE b.userId = u.id ORDER BY b.id DESC limit #{page}, 3
 	</select>
 	<select id="joinUserFindById"
 		resultType="com.cos.crud.model.UserBoard">

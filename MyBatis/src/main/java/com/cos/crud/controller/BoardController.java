@@ -13,85 +13,89 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cos.crud.model.Board;
 import com.cos.crud.model.UserBoard;
-import com.cos.crud.repository.BoardRepository;
+import com.cos.crud.service.BoardService;
+import com.cos.crud.utils.Script;
 
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-	
+
 	@Autowired
-	private BoardRepository boardRepo; 
-	
+	private BoardService bService;
+
 	@GetMapping("/list")
 	public String list() {
 		return "redirect:/board/list/1";
 	}
-	
-	@GetMapping("/findall")
-	public @ResponseBody List<Board> findAll() {
-		List<Board> boards = boardRepo.findAll();
-		return boards;
-	}
-	
+
 	@GetMapping("/list/{page}")
 	public String findByPage(@PathVariable int page, Model model) {
-		int findpage = (page - 1) * 3;
-		List<UserBoard> userBoards = boardRepo.findByPage(findpage);
-		int countPage = boardRepo.selectCount();
-		if (countPage%3==0) {
-			countPage = countPage/3;
-		}else {
-			countPage = countPage/3+1;
+		List<UserBoard> userBoards = bService.findByPage(page);
+		int countPage = bService.selectCount();
+		List<UserBoard> popularBoards = bService.findOrderByReadCountDesc();
+		if (userBoards != null && countPage != -1 && popularBoards != null) {
+			model.addAttribute("page", page);
+			model.addAttribute("countPage", countPage);
+			model.addAttribute("userBoards", userBoards);
+			model.addAttribute("popularBoards", popularBoards);
+			return "/board/list";
+		} else {
+			return "redirect:/";
 		}
-
-		List<UserBoard> popularBoards = boardRepo.findOrderByReadCountDesc();
-		model.addAttribute("page",page);
-		model.addAttribute("countPage",countPage);
-		model.addAttribute("userBoards",userBoards);
-		model.addAttribute("popularBoards",popularBoards);
-		return "/board/list";
 	}
 
 	@GetMapping("/postForm")
 	public String joinForm() {
 		return "/board/postForm";
 	}
-	
+
 	@PostMapping("/post")
-	public String post(Board board) {
-		boardRepo.post(board);
-		return "redirect:/board/list";
+	public @ResponseBody String post(Board board) {
+		int result = bService.post(board);
+		if (result == 1) {
+			return Script.href("/board/list");
+		}
+		return Script.back("Fail Post");
 	}
-	
+
 	@GetMapping("/updateForm/{id}")
 	public String updateForm(@PathVariable int id, Model model) {
-		Board board = boardRepo.findById(id);
-		model.addAttribute(board);
-		return "/board/updateForm";
+		Board board = bService.updateForm(id);
+		if (board != null) {
+			model.addAttribute(board);
+			return "/board/updateForm";
+		}
+		return "redirect:/";
 	}
-	
+
 	@PostMapping("/update")
-	public String update(Board board) {
-		boardRepo.update(board);
-		System.out.println("[[[[[[board object]]]]]]"+board);
-		return "redirect:/board/detail/"+board.getId();
+	public @ResponseBody String update(Board board) {
+		int result = bService.update(board);
+		if (result == 1) {
+			return Script.href("/board/detail/" + board.getId());
+		}
+		return Script.back("Fail Update");
 	}
-	
+
 	@GetMapping("/detail/{id}")
 	public String detail(@PathVariable int id, Model model) {
-		UserBoard board = boardRepo.joinUserFindById(id);
-		boardRepo.increaseReadCount(id);
-		List<UserBoard> popularBoards = boardRepo.findOrderByReadCountDesc();
-		model.addAttribute("board",board);
-		model.addAttribute("popularBoards",popularBoards);
-		return "/board/detail";
+		UserBoard board = bService.detail(id);
+		List<UserBoard> popularBoards = bService.findOrderByReadCountDesc();
+		if (board != null && popularBoards != null) {
+			model.addAttribute("board", board);
+			model.addAttribute("popularBoards", popularBoards);
+			return "/board/detail";
+		}
+		return "redirect:/";
 	}
 
 	@GetMapping("/delete/{id}")
-	public String delete(@PathVariable int id) {
-		boardRepo.delete(id);
-		return "redirect:/board/list";
+	public @ResponseBody String delete(@PathVariable int id) {
+		int result = bService.delete(id);
+		if (result == 1) {
+			return Script.href("/board/list");
+		}
+		return Script.back("Fail Update");
 	}
-	
-	
+
 }

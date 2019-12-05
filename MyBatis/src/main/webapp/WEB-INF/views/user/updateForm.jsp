@@ -17,6 +17,7 @@
 						<div class="col-lg-12 d-flex">
 							<form action="/user/update" method="POST" class="bg-light p-5 contact-form" enctype="multipart/form-data">
 								<input type="hidden" name="id" value="${user.id}">
+								<input type="hidden" name="userProfile" value="${user.userProfile}">
 								<h1>User Profile</h1>
 								<div class="form-group">
 									<input type="text" class="form-control" name="username" value="${user.username}" readonly="readonly">

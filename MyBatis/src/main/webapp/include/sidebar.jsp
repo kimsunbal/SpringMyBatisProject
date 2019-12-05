@@ -13,7 +13,7 @@
 		<h3 class="sidebar-heading">Popular Articles</h3>
 		<c:forEach var="popularBoard" items="${popularBoards}">
 			<div class="block-21 mb-4 d-flex">
-				<a class="blog-img mr-4" style="background-image: url(images/image_1.jpg);"></a>
+				<a class="blog-img mr-4" style="background-image: url(/images/image_1.jpg);"></a>
 				<div class="text">
 					<h3 class="heading">
 						<a href="#">${popularBoard.title}</a>
